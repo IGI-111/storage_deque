@@ -4,7 +4,7 @@ description = "An efficient double ended queue for storage values"
 entry = "lib.sw"
 license = "MIT"
 name = "storage_deque"
-version = "0.1.0"
+version = "0.1.1"
 repository = "https://github.com/IGI-111/storage_deque"
 
 [dependencies]
