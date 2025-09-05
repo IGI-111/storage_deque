@@ -12,15 +12,20 @@ impl<T> StorageKey<StorageDeque<T>> {
         StorageKey::new(self.slot(), self.offset() + 0, self.field_id())
     }
     #[storage(read)]
-    pub fn front_index(self) -> u64 { // FIXME
+    pub fn front_index(self) -> u64 {
         self.front_key().try_read().unwrap_or(0)
     }
     fn tail_key(self) -> StorageKey<u64> {
         StorageKey::new(self.slot(), self.offset() + 1, self.field_id())
     }
     #[storage(read)]
-    pub fn tail_index(self) -> u64 { // FIXME
+    pub fn tail_index(self) -> u64 {
         self.tail_key().try_read().unwrap_or(0)
+    }
+
+    #[storage(read)]
+    pub fn back_index(self) -> u64 {
+        wrapping_sub(self.tail_index(), 1)
     }
 
     fn get_key(self, index: u64) -> StorageKey<T> {
@@ -37,8 +42,7 @@ impl<T> StorageKey<StorageDeque<T>> {
         if self.is_empty() {
             None
         } else {
-            let front_index = self.front_index();
-            Some(self.get_key(front_index).read())
+            Some(self.get_key(self.front_index()).read())
         }
     }
 
@@ -47,9 +51,7 @@ impl<T> StorageKey<StorageDeque<T>> {
         if self.is_empty() {
             None
         } else {
-            let tail_index = self.tail_index();
-            let back_index = wrapping_sub(tail_index, 1);
-            Some(self.get_key(back_index).read())
+            Some(self.get_key(self.back_index()).read())
         }
     }
 
