@@ -18,6 +18,7 @@ impl Example for Contract {
       storage.queue.push_back(2);
       storage.queue.push_back(3);
       storage.queue.push_back(4);
+      assert_eq(storage.queue.len(), 4);
       assert_eq(Some(4u8), storage.queue.pop_back());
       assert_eq(Some(1u8), storage.queue.pop_front());
       assert_eq(Some(2u8), storage.queue.pop_front());
@@ -25,6 +26,7 @@ impl Example for Contract {
       assert_eq(Some(3u8), storage.queue.pop_back());
       assert_eq(Some(42u8), storage.queue.pop_back());
       assert(storage.queue.is_empty());
+      assert_eq(storage.queue.len(), 0);
       assert_eq(None, storage.queue.pop_back());
     }
 }

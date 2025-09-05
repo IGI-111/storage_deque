@@ -38,6 +38,11 @@ impl<T> StorageKey<StorageDeque<T>> {
     }
 
     #[storage(read)]
+    pub fn len(self) -> u64 {
+        wrapping_sub(self.tail_index(), self.front_index())
+    }
+
+    #[storage(read)]
     pub fn front(self) -> Option<T> {
         if self.is_empty() {
             None
