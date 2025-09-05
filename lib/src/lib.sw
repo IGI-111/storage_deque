@@ -2,14 +2,12 @@ library;
 
 use std::hash::sha256;
 use std::storage::storage_key::StorageKey;
-use std::ops::{Add, Subtract};
 
 const STORAGE_DEQUE_DOMAIN: u8 = 39;
 
 pub struct StorageDeque<T> {}
 
-impl<T> StorageKey<StorageDeque<T>>
-where T: Add + Subtract {
+impl<T> StorageKey<StorageDeque<T>> {
     fn front_key(self) -> StorageKey<u64> {
         StorageKey::new(self.slot(), self.offset() + 0, self.field_id())
     }
